@@ -1,3 +1,3 @@
 import Foundation
 
-dataTypesTest()
+print("привет", "Мир", "!")
