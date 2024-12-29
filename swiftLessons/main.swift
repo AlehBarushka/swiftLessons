@@ -1,13 +1,14 @@
 import Foundation
 
-let a = 3 * 4 * 4
+let c = 64
+var c2 = 2
 
-func mul(firstNumber a: Int, b: Int, _ c: Int) -> Int {
-    return a * b * c
+func sum(_ a: Int, _ b: Int) -> Int {
+    c2 += 1
+    return a + b + c
 }
 
-func mul2(firstNumber a: Int, b: Int, _ c: Int) {
-    print(a * b * c)
-}
+let sumResult = sum(1, 2)
 
-print(a, mul(firstNumber: 3, b: 4, 4))
+print(sumResult)
+print(c2)
