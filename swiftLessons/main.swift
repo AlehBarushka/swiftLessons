@@ -1,14 +1,9 @@
 import Foundation
 
-let c = 64
-var c2 = 2
+let a = "привет"
+let a2: String? = "привет"
+let b = 7
 
-func sum(_ a: Int, _ b: Int) -> Int {
-    c2 += 1
-    return a + b + c
-}
-
-let sumResult = sum(1, 2)
-
-print(sumResult)
-print(c2)
+print(a.uppercased())
+print(b.isMultiple(of: 3))
+print(a2?.count) // optional chaining
