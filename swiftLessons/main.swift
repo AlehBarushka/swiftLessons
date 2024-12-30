@@ -1,108 +1,71 @@
 import Darwin
 import Foundation
 
-print("Добро пожаловать в прорамму калькулятор!")
+let a = 2
 
-var history: [String] = []
+if a == 2 {
+    print("If")
+} else {
+    print("else")
+}
 
-while true {
-    let calcOperator = getValueFromUser(
-        desc:
-            "Выберете операцию: +, -, * или /. Для завершения программы введите q. Для просмотра истории введите h."
-    )
+// Позволяет обрабатываеть негативные условия и выходить из scope
+// Обязаны в блоке else покинуть scope
+guard a == 2 else { exit(0) }
 
-    if calcOperator == "q" { exit(0) }
-    
-    if calcOperator == "h" {
-        print(history)
-        continue
-    }
+// Покинуть функцию
+func division(_ a: Int, _ b: Int) -> Int? {
+    guard b != 0 else { return nil }
 
-    validateCalcOperator(calcOperator: calcOperator)
+    return a / b
+}
 
-    let operand1 = Int(getValueFromUser(desc: "Введите целое число:"))
-    validateOperand(operand: operand1)
+let b = division(12, 6)
 
-    let operand2 = Int(getValueFromUser(desc: "Введите целое число:"))
-    validateOperand(operand: operand2)
+print(b)
 
-    let result: Int? = calculate(
-        calcOperator: calcOperator,
-        firstOperand: operand1!,
-        secondOperand: operand2!)
+// Покинуть цикл
+for index in 0..<10 {
+    print(index)
+    guard index < 5 else { break }
+}
 
-    if let result {
-        print("Идёт вычесление примера...")
-        showResult(result)
-
-        saveHistory(
-            firstOperand: operand1!,
-            secondOperand: operand2!,
-            calcOperator: calcOperator,
-            result: result
-        )
+// Искусственный пример на if
+func divisionIf(_ a: Int?, _ b: Int?) -> Int? {
+    if let a {
+        if let b {
+            if b != 0 {
+                return a / b
+            } else {
+                print("На 0 делить нельзя!")
+                return nil
+            }
+        } else {
+            print("Второе число не может быть nil!")
+            return nil
+        }
     } else {
-        print("Ошибка введённых данных!")
-    }
-
-    print("#")
-    print(
-        "------------------------------------------------------------------------"
-    )
-    print("#")
-}
-
-func getValueFromUser(desc: String) -> String {
-    print(desc)
-
-    return readLine() ?? ""
-}
-
-func showResult(_ res: Int) {
-    print("Результат: " + String(res))
-}
-
-func calculate(calcOperator: String, firstOperand: Int, secondOperand: Int)
-    -> Int?
-{
-    switch calcOperator {
-    case "+":
-        return firstOperand + secondOperand
-    case "-":
-        return firstOperand - secondOperand
-    case "*":
-        return firstOperand * secondOperand
-    case "/":
-        return firstOperand / secondOperand
-    default:
+        print("Первое число не может быть nil!")
         return nil
     }
 }
 
-func validateCalcOperator(calcOperator: String) {
-    if calcOperator != "+",
-        calcOperator != "-",
-        calcOperator != "*",
-        calcOperator != "/"
-    {
-        print("Некорректный оператор!")
-        exit(0)
+// Искусственный пример на guard
+func divisionGuard(_ a: Int?, _ b: Int?) -> Int? {
+    guard let a else {
+        print("Первое число не может быть nil!")
+        return nil
     }
-}
 
-func validateOperand(operand: Int?) {
-    if operand == nil {
-        print("Некорректное число!")
-        exit(0)
+    guard let b else {
+        print("Второе число не может быть nil!")
+        return nil
     }
-}
 
-func saveHistory(
-    firstOperand: Int,
-    secondOperand: Int,
-    calcOperator: String,
-    result: Int
-) {
-    history.append(
-        "\(firstOperand) \(calcOperator) \(secondOperand) = \(result)")
+    guard b == 0 else {
+        print("На 0 делить нельзя!")
+        return nil
+    }
+
+    return a / b
 }
