@@ -1,59 +1,108 @@
+import Darwin
 import Foundation
 
-let numbers: [Int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+print("Добро пожаловать в прорамму калькулятор!")
 
-for number in numbers {
-    print(number)
+var history: [String] = []
+
+while true {
+    let calcOperator = getValueFromUser(
+        desc:
+            "Выберете операцию: +, -, * или /. Для завершения программы введите q. Для просмотра истории введите h."
+    )
+
+    if calcOperator == "q" { exit(0) }
+    
+    if calcOperator == "h" {
+        print(history)
+        continue
+    }
+
+    validateCalcOperator(calcOperator: calcOperator)
+
+    let operand1 = Int(getValueFromUser(desc: "Введите целое число:"))
+    validateOperand(operand: operand1)
+
+    let operand2 = Int(getValueFromUser(desc: "Введите целое число:"))
+    validateOperand(operand: operand2)
+
+    let result: Int? = calculate(
+        calcOperator: calcOperator,
+        firstOperand: operand1!,
+        secondOperand: operand2!)
+
+    if let result {
+        print("Идёт вычесление примера...")
+        showResult(result)
+
+        saveHistory(
+            firstOperand: operand1!,
+            secondOperand: operand2!,
+            calcOperator: calcOperator,
+            result: result
+        )
+    } else {
+        print("Ошибка введённых данных!")
+    }
+
+    print("#")
+    print(
+        "------------------------------------------------------------------------"
+    )
+    print("#")
 }
 
-for element in 0..<5 {
-    print(element)
+func getValueFromUser(desc: String) -> String {
+    print(desc)
+
+    return readLine() ?? ""
 }
 
-for _ in 0..<5 {
-    print("привет")
+func showResult(_ res: Int) {
+    print("Результат: " + String(res))
 }
 
-// 1..<10
-for element in stride(from: 0, to: 10, by: 2) {
-    print(element)
-}
-
-// 1...10
-for element in stride(from: 0, through: 10, by: 2) {
-    print(element)
-}
-
-var a = 0
-// сначала проверка условия потом тело
-while a < 10 {
-    print("Текщий индекс \(a)")
-    a += 1
-}
-
-var b = 20
-// сначала тело потом проверка условия
-repeat {
-    print("Текщий индекс \(b)")
-    b += 1
-} while b < 10
-
-var c = 0
-
-while c < 10 {
-    print("Текщий индекс \(c)")
-    c += 1
-    // выход из цикла
-    if c > 3 {
-        break
+func calculate(calcOperator: String, firstOperand: Int, secondOperand: Int)
+    -> Int?
+{
+    switch calcOperator {
+    case "+":
+        return firstOperand + secondOperand
+    case "-":
+        return firstOperand - secondOperand
+    case "*":
+        return firstOperand * secondOperand
+    case "/":
+        return firstOperand / secondOperand
+    default:
+        return nil
     }
 }
 
-var d = 0
+func validateCalcOperator(calcOperator: String) {
+    if calcOperator != "+",
+        calcOperator != "-",
+        calcOperator != "*",
+        calcOperator != "/"
+    {
+        print("Некорректный оператор!")
+        exit(0)
+    }
+}
 
-while d < 10 {
-    d += 1
-    //  исключение из цикла
-    if d == 3 { continue }
-    print("номер - \(d)")
+func validateOperand(operand: Int?) {
+    if operand == nil {
+        print("Некорректное число!")
+        exit(0)
+    }
+}
+
+func saveHistory(
+    firstOperand: Int,
+    secondOperand: Int,
+    calcOperator: String,
+    result: Int
+) {
+    history.append(
+        "\(firstOperand) \(calcOperator) \(secondOperand) = \(result)")
 }
