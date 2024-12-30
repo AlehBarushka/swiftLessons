@@ -1,71 +1,140 @@
 import Darwin
 import Foundation
 
-let a = 2
+print("Добро пожаловать в прорамму калькулятор!")
 
-if a == 2 {
-    print("If")
-} else {
-    print("else")
-}
+var history: [String] = []
 
-// Позволяет обрабатываеть негативные условия и выходить из scope
-// Обязаны в блоке else покинуть scope
-guard a == 2 else { exit(0) }
+while true {
+    let action = getValueFromUser(
+        desc:
+            "Что вы хотите сделать: c - расчёт примера, q - завершение работы, h - просмотр истории."
+    )
 
-// Покинуть функцию
-func division(_ a: Int, _ b: Int) -> Int? {
-    guard b != 0 else { return nil }
+    switch action {
+    case "c":
+        let result = calculate()
 
-    return a / b
-}
-
-let b = division(12, 6)
-
-print(b)
-
-// Покинуть цикл
-for index in 0..<10 {
-    print(index)
-    guard index < 5 else { break }
-}
-
-// Искусственный пример на if
-func divisionIf(_ a: Int?, _ b: Int?) -> Int? {
-    if let a {
-        if let b {
-            if b != 0 {
-                return a / b
-            } else {
-                print("На 0 делить нельзя!")
-                return nil
-            }
-        } else {
-            print("Второе число не может быть nil!")
-            return nil
+        guard let result else {
+            continue
         }
-    } else {
-        print("Первое число не может быть nil!")
-        return nil
+
+        showResult(result)
+    case "q":
+        quit()
+    case "h":
+        showHistory()
+    default:
+        print("Недопустимое действие!")
     }
+
+    print("")
+    print("-------------------------------------------------------------------")
+    print("")
 }
 
-// Искусственный пример на guard
-func divisionGuard(_ a: Int?, _ b: Int?) -> Int? {
-    guard let a else {
-        print("Первое число не может быть nil!")
+func getValueFromUser(desc: String) -> String {
+    print(desc)
+
+    return readLine() ?? ""
+}
+
+func showResult(_ res: Int) {
+    print("Результат: " + String(res))
+}
+
+func calculate() -> Int? {
+    let calcOperator = getValueFromUser(
+        desc: "Выберете операцию: +, -, * или /")
+
+    guard
+        calcOperator == "+"
+            || calcOperator == "-"
+            || calcOperator == "*"
+            || calcOperator == "/"
+    else {
+        print("Некорректный оператор!")
+
         return nil
     }
 
-    guard let b else {
-        print("Второе число не может быть nil!")
+    let operand1 = Int(getValueFromUser(desc: "Введите первое целое число:"))
+    guard let operand1 else {
+        print("Первое число некорректно!")
+
         return nil
     }
 
-    guard b == 0 else {
+    let operand2 = Int(getValueFromUser(desc: "Введите второе целое число:"))
+    guard let operand2 else {
+        print("Второе число некорректно!")
+
+        return nil
+    }
+
+    print("Идёт вычесление примера...")
+
+    switch calcOperator {
+    case "+":
+        saveHistory(
+            firstOperand: operand1,
+            secondOperand: operand2,
+            calcOperator: calcOperator,
+            result: operand1 + operand2
+        )
+
+        return operand1 + operand2
+    case "-":
+        saveHistory(
+            firstOperand: operand1,
+            secondOperand: operand2,
+            calcOperator: calcOperator,
+            result: operand1 - operand2
+        )
+
+        return operand1 - operand2
+    case "*":
+        saveHistory(
+            firstOperand: operand1,
+            secondOperand: operand2,
+            calcOperator: calcOperator,
+            result: operand1 * operand2
+        )
+
+        return operand1 * operand2
+    case "/" where operand2 == 0:
         print("На 0 делить нельзя!")
+
+        return nil
+
+    case "/":
+        saveHistory(
+            firstOperand: operand1,
+            secondOperand: operand2,
+            calcOperator: calcOperator,
+            result: operand1 / operand2
+        )
+
+        return operand1 / operand2
+    default:
         return nil
     }
-
-    return a / b
 }
+
+func saveHistory(
+    firstOperand: Int,
+    secondOperand: Int,
+    calcOperator: String,
+    result: Int
+) {
+    history.append(
+        "\(firstOperand) \(calcOperator) \(secondOperand) = \(result)")
+}
+
+func showHistory() {
+    for item in history {
+        print(item)
+    }
+}
+
+func quit() { exit(0) }
