@@ -1,22 +1,59 @@
 import Foundation
 
-let salarys: [Int] = [1, 2]
-let names: [String] = ["Иван", "Олег"]
-let any: [Any] = ["Иван", 1]
+let numbers: [Int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-var a = [1, 2, 3, 4]
-a = [2, 3, 4]  // В константу нельзя изменять значения внутри
+for number in numbers {
+    print(number)
+}
 
-print(a[0], a[2])
-print(a.count)
+for element in 0..<5 {
+    print(element)
+}
 
-a[1] = 7  // Изменение
-print(a)
+for _ in 0..<5 {
+    print("привет")
+}
 
-a.append(3)  // Добавление
-a.insert(4, at: 0)  // Добавление по индексу
-print(a)
+// 1..<10
+for element in stride(from: 0, to: 10, by: 2) {
+    print(element)
+}
 
-a.remove(at: 0)  // Удаление по индексу
-a.removeLast()  // Удаление последнего
-print(a)
+// 1...10
+for element in stride(from: 0, through: 10, by: 2) {
+    print(element)
+}
+
+var a = 0
+// сначала проверка условия потом тело
+while a < 10 {
+    print("Текщий индекс \(a)")
+    a += 1
+}
+
+var b = 20
+// сначала тело потом проверка условия
+repeat {
+    print("Текщий индекс \(b)")
+    b += 1
+} while b < 10
+
+var c = 0
+
+while c < 10 {
+    print("Текщий индекс \(c)")
+    c += 1
+    // выход из цикла
+    if c > 3 {
+        break
+    }
+}
+
+var d = 0
+
+while d < 10 {
+    d += 1
+    //  исключение из цикла
+    if d == 3 { continue }
+    print("номер - \(d)")
+}
