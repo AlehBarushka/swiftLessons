@@ -1,68 +1,22 @@
 import Foundation
 
-print("Добро пожаловать в прорамму калькулятор!")
-let calcOperator = getValueFromUser(desc: "Выберете операцию: +, -, * или /")
-validateCalcOperator(calcOperator: calcOperator)
+let salarys: [Int] = [1, 2]
+let names: [String] = ["Иван", "Олег"]
+let any: [Any] = ["Иван", 1]
 
-let operand1 = Int(getValueFromUser(desc: "Введите целое число:"))
-validateOperand(operand: operand1)
+var a = [1, 2, 3, 4]
+a = [2, 3, 4]  // В константу нельзя изменять значения внутри
 
-let operand2 = Int(getValueFromUser(desc: "Введите целое число:"))
-validateOperand(operand: operand2)
+print(a[0], a[2])
+print(a.count)
 
-var result: Int? = calculate(
-    calcOperator: calcOperator,
-    firstOperand: operand1!,
-    secondOperand: operand2!)
+a[1] = 7  // Изменение
+print(a)
 
-if let result {
-    print("Идёт вычесление примера...")
-    showResult(result)
-} else {
-    print("Ошибка введённых данных!")
-}
+a.append(3)  // Добавление
+a.insert(4, at: 0)  // Добавление по индексу
+print(a)
 
-func getValueFromUser(desc: String) -> String {
-    print(desc)
-
-    return readLine() ?? ""
-}
-
-func showResult(_ res: Int) {
-    print("Результат: " + String(res))
-}
-
-func calculate(calcOperator: String, firstOperand: Int, secondOperand: Int)
-    -> Int?
-{
-    switch calcOperator {
-    case "+":
-        return firstOperand + secondOperand
-    case "-":
-        return firstOperand - secondOperand
-    case "*":
-        return firstOperand * secondOperand
-    case "/":
-        return firstOperand / secondOperand
-    default:
-        return nil
-    }
-}
-
-func validateCalcOperator(calcOperator: String) {
-    if calcOperator != "+",
-        calcOperator != "-",
-        calcOperator != "*",
-        calcOperator != "/"
-    {
-        print("Некорректный оператор!")
-        exit(0)
-    }
-}
-
-func validateOperand(operand: Int?) {
-    if operand == nil {
-        print("Некорректное число!")
-        exit(0)
-    }
-}
+a.remove(at: 0)  // Удаление по индексу
+a.removeLast()  // Удаление последнего
+print(a)
