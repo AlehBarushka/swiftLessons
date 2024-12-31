@@ -1,140 +1,35 @@
 import Darwin
 import Foundation
 
-print("Добро пожаловать в прорамму калькулятор!")
+let persons: [Any] = [25, "Ivan", 32310, [545, "asads"]]
 
-var history: [String] = []
-
-while true {
-    let action = getValueFromUser(
-        desc:
-            "Что вы хотите сделать: c - расчёт примера, q - завершение работы, h - просмотр истории."
-    )
-
-    switch action {
-    case "c":
-        let result = calculate()
-
-        guard let result else {
-            continue
-        }
-
-        showResult(result)
-    case "q":
-        quit()
-    case "h":
-        showHistory()
-    default:
-        print("Недопустимое действие!")
-    }
-
-    print("")
-    print("-------------------------------------------------------------------")
-    print("")
+if let name = persons[1] as? String {
+    print("Имя:" + " " + name)
 }
 
-func getValueFromUser(desc: String) -> String {
-    print(desc)
+// Картеж
+let person = (
+    age: 28,
+    surname: "Иванов",
+    name: "Ivan"
+)
 
-    return readLine() ?? ""
-}
+// Обращения к свойствам
+let tuples = (1, "asdfadsf", 2)
+print(tuples.1)
 
-func showResult(_ res: Int) {
-    print("Результат: " + String(res))
-}
+// Доступ по имени (lables)
+let tuples2 = (age: 18, name: "Ivan", 2)
+print(tuples2.age)
 
-func calculate() -> Int? {
-    let calcOperator = getValueFromUser(
-        desc: "Выберете операцию: +, -, * или /")
+let tuples3: (name: String, age: Int) = ("Ivan", 18)
 
-    guard
-        calcOperator == "+"
-            || calcOperator == "-"
-            || calcOperator == "*"
-            || calcOperator == "/"
-    else {
-        print("Некорректный оператор!")
+// Изменение
+let tuples4 = (age: 18, name: "Ivan", 2)
+//tuples4.age = 3 Нельзя менять если let !!!
+var tuples5 = (age: 18, name: "Ivan", 2)
+tuples5.age = 3
 
-        return nil
-    }
-
-    let operand1 = Int(getValueFromUser(desc: "Введите первое целое число:"))
-    guard let operand1 else {
-        print("Первое число некорректно!")
-
-        return nil
-    }
-
-    let operand2 = Int(getValueFromUser(desc: "Введите второе целое число:"))
-    guard let operand2 else {
-        print("Второе число некорректно!")
-
-        return nil
-    }
-
-    print("Идёт вычесление примера...")
-
-    switch calcOperator {
-    case "+":
-        saveHistory(
-            firstOperand: operand1,
-            secondOperand: operand2,
-            calcOperator: calcOperator,
-            result: operand1 + operand2
-        )
-
-        return operand1 + operand2
-    case "-":
-        saveHistory(
-            firstOperand: operand1,
-            secondOperand: operand2,
-            calcOperator: calcOperator,
-            result: operand1 - operand2
-        )
-
-        return operand1 - operand2
-    case "*":
-        saveHistory(
-            firstOperand: operand1,
-            secondOperand: operand2,
-            calcOperator: calcOperator,
-            result: operand1 * operand2
-        )
-
-        return operand1 * operand2
-    case "/" where operand2 == 0:
-        print("На 0 делить нельзя!")
-
-        return nil
-
-    case "/":
-        saveHistory(
-            firstOperand: operand1,
-            secondOperand: operand2,
-            calcOperator: calcOperator,
-            result: operand1 / operand2
-        )
-
-        return operand1 / operand2
-    default:
-        return nil
-    }
-}
-
-func saveHistory(
-    firstOperand: Int,
-    secondOperand: Int,
-    calcOperator: String,
-    result: Int
-) {
-    history.append(
-        "\(firstOperand) \(calcOperator) \(secondOperand) = \(result)")
-}
-
-func showHistory() {
-    for item in history {
-        print(item)
-    }
-}
-
-func quit() { exit(0) }
+// Деструктуризация
+let (age, name, some) = tuples4
+let (a, b, _) = tuples4
