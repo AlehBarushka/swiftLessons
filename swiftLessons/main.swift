@@ -1,35 +1,48 @@
 import Darwin
 import Foundation
 
-let persons: [Any] = [25, "Ivan", 32310, [545, "asads"]]
+let heightArray = [202, 210, 198, 187, 165]
 
-if let name = persons[1] as? String {
-    print("Имя:" + " " + name)
+let heightTuple = (Ivan: 202, Alex: 210, Oleg: 198, Anton: 187, Max: 165)
+
+let heighArrayTuples: [(name: String, heigth: Int)] = [
+    (name: "Ivan", heigth: 202),
+    (name: "Alex", heigth: 210),
+    (name: "Oleg", heigth: 198),
+    (name: "Anton", heigth: 187),
+    (name: "Max", heigth: 165),
+]
+
+let heighDic: [String: Int] = [
+    "Ivan": 202,
+    "Alex": 210,
+    "Oleg": 198,
+    "Anton": 187,
+    "Max": 165,
+]
+
+print(heighDic["Ivan"])
+
+// Пустой словарь
+let dicA: [String: Int] = [:]
+let dicB = [String: Int]()
+let dicC: [String: Int]?
+
+// Оперции
+var dicVar = ["a": 1, "b": 2]
+dicVar = ["b": 1, "a": 2]
+dicVar["c"] = 3
+dicVar["a"] = nil
+dicVar["b"] = 5
+
+// Удаление всех
+// dicVar.removeAll()
+
+for item in dicVar {
+    print(item.key, item.value)
 }
 
-// Картеж
-let person = (
-    age: 28,
-    surname: "Иванов",
-    name: "Ivan"
-)
-
-// Обращения к свойствам
-let tuples = (1, "asdfadsf", 2)
-print(tuples.1)
-
-// Доступ по имени (lables)
-let tuples2 = (age: 18, name: "Ivan", 2)
-print(tuples2.age)
-
-let tuples3: (name: String, age: Int) = ("Ivan", 18)
-
-// Изменение
-let tuples4 = (age: 18, name: "Ivan", 2)
-//tuples4.age = 3 Нельзя менять если let !!!
-var tuples5 = (age: 18, name: "Ivan", 2)
-tuples5.age = 3
-
-// Деструктуризация
-let (age, name, some) = tuples4
-let (a, b, _) = tuples4
+//С деструктуризацией
+for (a, b) in dicVar {
+    print(a, b)
+}
